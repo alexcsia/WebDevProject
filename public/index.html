@@ -8,26 +8,57 @@
   </head>
 
   <body>
-    <div class="center-div" name="Welcome">
-      <h2 class="custom-heading-title">
-        Hi. <br />
-        What would you like to read today?
-      </h2>
-      <form action="/search" method="get">
-        <input type="search" name="SearchBar" placeholder="Search..." />
-        <input type="submit" value="Search" />
-      </form>
+    <div id="bar">
+      <h1 id="title">Mag.Zine</h1>
     </div>
 
-    <a href="about.html">
-      <button class="custom-button btn-left">Go to about page</button>
+    <div name="Welcome" id="mainPage-div">
+      <h1 class="custom-heading-title">
+        Hi. <br />
+        What would you like to read today?
+      </h1>
+      <form action="/search/find" method="get">
+        <input
+          class="custom-search-bar"
+          id="src-bar"
+          type="search"
+          name="searchTerm"
+          placeholder="Search..."
+        />
+        <input
+          type="submit"
+          class="custom-button"
+          value="Search"
+          id="send-button"
+        />
+      </form>
+      <button class="custom-button center-div" id="tag-btn">Tags</button>
+      <!--<div class="center-div" id="tags-div"> -->
+      <ul style="display: none" id="featured-tags"></ul>
+      <!--</div>-->
+    </div>
+
+    <a href="/about.html">
+      <button class="custom-button btn-left">About</button>
     </a>
 
-    <a href="third.html">
-      <button class="custom-button sign-up-btn">Sign up</button>
+    <a href="/signup.html" id="signup-ref">
+      <button class="custom-button sign-up-btn" id="signup">Sign up</button>
+    </a>
+    <a href="/login.html" id="login-ref">
+      <button class="custom-button log-in-btn" id="login">Log in</button>
+      <!--<div id="loginButtonContainer"></div>-->
+    </a>
+    <a href="/login.html" id="crt-post-ref">
+      <button class="custom-button" id="create-post-btn">Create post</button>
+    </a>
+    <a href="/user/profile" id="crt-post-ref">
+      <button class="custom-button" id="profile-btn">Profile</button>
     </a>
 
+    <script src="/scripts/login.js"></script>
+    <script src="/scripts/index.js"></script>
+    <script src="/scripts/createPostBtn.js"></script>
     <!-- styling empty div-->
-    <div class="custom-div-class"></div>
   </body>
 </html>

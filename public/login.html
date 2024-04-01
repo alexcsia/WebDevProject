@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheet.css" />
+  </head>
+  <body>
+    <a href="index.html">
+      <button class="custom-button">Home</button>
+    </a>
+    <!--This form sends a request to the /login route handler-->
+    <form class="center-div" id="LogInDiv" method="POST" action="/auth/login">
+      <h1
+        style="
+          margin-left: 125px;
+          margin-top: -25px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        "
+      >
+        Log in
+      </h1>
+      <div>
+        <label>Username</label>
+        <br />
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          class="custom-search-bar"
+          required
+        />
+      </div>
+      <div>
+        <label>Password</label>
+        <br />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          class="custom-search-bar"
+          required
+        />
+      </div>
+      <button
+        class="custom-button"
+        type="submit"
+        style="height: 130px; align-self: center; margin-left: -19px"
+      >
+        Log in
+      </button>
+
+      <h3
+        style="
+          margin-left: 55px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        "
+      >
+        Don't have an account?
+        <a href="/signup.html" style="text-decoration: none; color: #316caa"
+          >Sign up</a
+        >
+      </h3>
+    </form>
+    <div class="fullscreen-background"></div>
+  </body>
+</html>

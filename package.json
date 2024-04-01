@@ -1,0 +1,20 @@
+{
+  "name": "first_project",
+  "version": "1.0.0",
+  "description": "User Authentication: Users can create accounts, log in, and log out. User authentication ensures that only authorized users can create, edit, and delete posts.",
+  "main": "database.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^10.4.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  }
+}

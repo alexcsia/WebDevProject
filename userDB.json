@@ -1,0 +1,36 @@
+[
+  {
+    "id": "1",
+    "username": "user1",
+    "password": "123"
+  },
+  {
+    "id": "2",
+    "username": "user2",
+    "password": "abc"
+  },
+  {
+    "first_name": "sad",
+    "last_name": "dsa",
+    "username": "asdasdasdas",
+    "email": "asdas@dsad",
+    "phone_number": "123",
+    "password": "dasdas"
+  },
+  {
+    "first_name": "das",
+    "last_name": "da",
+    "username": "asdas",
+    "email": "asda@dsa",
+    "phone_number": "123",
+    "password": "asdas"
+  },
+  {
+    "first_name": "das",
+    "last_name": "da",
+    "username": "asdas",
+    "email": "asda@dsa",
+    "phone_number": "123",
+    "password": "asdas"
+  }
+]

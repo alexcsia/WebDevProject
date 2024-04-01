@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheet.css" />
+  </head>
+  <body>
+    <!-- styling empty div-->
+    <div class="custom-div-class"></div>
+
+    <a href="/index.html">
+      <button class="custom-button btn-left">Main Page</button>
+    </a>
+
+    <form
+      class="center-div"
+      id="SignUpDiv"
+      method="POST"
+      action="/register/submit"
+    >
+      <h1
+        style="
+          margin-left: 125px;
+          margin-top: -25px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        "
+      >
+        Sign Up
+      </h1>
+
+      <div style="display: inline-block">
+        <label>First Name</label>
+        <br />
+        <input
+          type="text"
+          placeholder="First name"
+          name="first_name"
+          class="custom-search-bar"
+          required
+        />
+      </div>
+      <div>
+        <label>Last Name</label>
+        <br />
+        <input
+          type="text"
+          placeholder="Last name"
+          name="last_name"
+          class="custom-search-bar"
+          required
+        />
+      </div>
+      <div>
+        <label>Username</label>
+        <br />
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          class="custom-search-bar"
+          required
+        />
+      </div>
+      <div>
+        <label>Email</label>
+        <br />
+        <input
+          type="email"
+          placeholder="Email address"
+          name="email"
+          class="custom-search-bar"
+          required
+        />
+      </div>
+      <div>
+        <label>Phone Number</label>
+        <br />
+        <input
+          type="tel"
+          placeholder="Phone"
+          name="phone_number"
+          class="custom-search-bar"
+          required
+        />
+      </div>
+      <div>
+        <label>Password</label>
+        <br />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          class="custom-search-bar"
+          required
+        />
+      </div>
+
+      <button class="custom-button" id="submit-info-btn" type="submit">
+        Submit
+      </button>
+    </form>
+    <div class="fullscreen-background"></div>
+    <a href="/login.html">
+      <button class="custom-button sign-up-btn">Log in</button>
+    </a>
+  </body>
+</html>

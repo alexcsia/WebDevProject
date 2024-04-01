@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheet.css" />
+  </head>
+  <body>
+    <div class="fullscreen-background"></div>
+    <div class="center-div" id="search-results-menu-div">
+      <header>
+        <h1
+          class="lbl-titles"
+          style="font-size: 35px; position: absolute; left: 41%"
+        >
+          Create a new post
+        </h1>
+        <div class="center-div" id="nav">
+          <a href="/index.html">
+            <button class="custom-button">Home</button>
+          </a>
+          <a href="/about.html">
+            <button class="custom-button">About</button>
+          </a>
+        </div>
+      </header>
+      <form
+        class="center-div"
+        id="createPostForm"
+        method="POST"
+        action="/create/newPost"
+      >
+        <div style="margin-top: 20px">
+          <label for="title" class="lbl-titles" name="title">Title:</label
+          ><br />
+          <textarea
+            class="custom-search-bar"
+            id="title-space"
+            name="title"
+            style="resize: none"
+            required
+          >
+          </textarea
+          ><br />
+        </div>
+
+        <div>
+          <label for="content" class="lbl-titles" name="content">Content:</label
+          ><br />
+          <textarea
+            class="custom-search-bar"
+            id="content-space"
+            name="content"
+            rows="6"
+            style="resize: none"
+            required
+          ></textarea
+          ><br />
+        </div>
+        <div>
+          <label for="tags" class="lbl-titles" name="tags">Tags:</label><br />
+          <textarea
+            class="custom-search-bar"
+            type="text"
+            id="tags-space"
+            name="tags"
+            style="resize: none"
+          ></textarea>
+
+          <br />
+        </div>
+        <button class="custom-button" id="submit-post">Create Post</button>
+      </form>
+    </div>
+  </body>
+</html>

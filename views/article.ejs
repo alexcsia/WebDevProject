@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheet.css" />
+  </head>
+  <body>
+    <!-- styling empty div-->
+    <div class="custom-div-class"></div>
+
+    <header>
+      <h1 class="align-heading">
+        <%=author.first_name%> <%=author.last_name%>
+      </h1>
+    </header>
+    <main>
+      <article>
+        <h2 class="align-heading"><%=title%></h2>
+        <p class="align-heading" id="date">Published on January 1, 2024</p>
+        <div class="post-content">
+          <textarea
+            id="userContent"
+            name="userContent"
+            rows="30"
+            cols="600"
+            maxlength="3000"
+            required
+          >
+<%= content%>
+          </textarea>
+        </div>
+      </article>
+    </main>
+
+    <a href="/sign_up.html">
+      <button class="custom-button sign-up-btn">Sign up</button>
+    </a>
+    <a href="/log_in.html">
+      <button class="custom-button log-in-btn">Log in</button>
+    </a>
+    <a href="/index.html">
+      <button class="custom-button btn-left">Home</button>
+    </a>
+  </body>
+</html>

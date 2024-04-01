@@ -8,7 +8,7 @@ Post Editing: Authors can edit their own posts after they have been published
 
 Post Deletion: Authors can delete their own posts. Depending on the implementation, administrators may also have the ability to delete any post.
 
-Commenting System: Readers can leave comments on individual blog posts. Comments typically include the commenter's name, comment content, and timestamp. Comments can be moderated by the blog owner.
+Commenting System: Readers can leave comments on individual blog posts. Comments typically include the commenter's name, comment content, and timestamp.
 
 Search Functionality: Users can search for specific posts based on keywords, tags, categories, or author names.
 

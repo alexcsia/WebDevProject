@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/stylesheet.css" />
+  </head>
+  <body>
+    <form class="center-div" id="SignUpDiv" method="POST" action="/user/edit">
+      <h1
+        style="
+          margin-left: 125px;
+          margin-top: -25px;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        "
+      >
+        Profile
+      </h1>
+
+      <div style="display: inline-block">
+        <label>First Name</label>
+        <br />
+        <input
+          type="text"
+          placeholder="First name"
+          name="first_name"
+          class="custom-search-bar"
+          value="<%= user.first_name %>"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Last Name</label>
+        <br />
+        <input
+          type="text"
+          placeholder="Last name"
+          name="last_name"
+          class="custom-search-bar"
+          value="<%= user.last_name %>"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Username</label>
+        <br />
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          class="custom-search-bar"
+          value="<%= user.username %>"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Email</label>
+        <br />
+        <input
+          type="email"
+          placeholder="Email address"
+          name="email"
+          class="custom-search-bar"
+          value="<%= user.email %>"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Phone Number</label>
+        <br />
+        <input
+          type="tel"
+          placeholder="Phone"
+          name="phone_number"
+          class="custom-search-bar"
+          value="<%= user.phone_number %>"
+          readonly
+        />
+      </div>
+      <div>
+        <label>Password</label>
+        <br />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          class="custom-search-bar"
+          value="<%= user.password %>"
+          readonly
+        />
+      </div>
+
+      <button class="custom-button" id="submit-info-btn" type="submit">
+        Save profile
+      </button>
+    </form>
+
+    <button class="custom-button sign-up-btn" id="editBtn">
+      Enable editing
+    </button>
+    <button class="custom-button log-in-btn" id="deleteBtn">
+      Delete account
+    </button>
+    <a href="/index.html">
+      <button class="custom-button btn-left">Home</button>
+    </a>
+    <div class="fullscreen-background"></div>
+    <script src="/scripts/deleteProfile.js"></script>
+    <script src="/scripts/editProfile.js"></script>
+  </body>
+</html>
