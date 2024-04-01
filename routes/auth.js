@@ -24,7 +24,7 @@ router.post("/login", async (req, res) => {
       return res.json({ message: "Invalid login credentials" });
     }
 
-    req.session.user = user; // Store user data in session
+    req.session.user = user; //store user data in session
     console.log("success");
 
     isAuthenticated = true;
@@ -32,7 +32,7 @@ router.post("/login", async (req, res) => {
     res.redirect("/");
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" }); // Generic error message
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

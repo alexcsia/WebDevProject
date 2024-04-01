@@ -29,7 +29,7 @@ btn_tags.addEventListener("click", () => {
   }
 });
 
-//Dynamically create the tag buttons based on available tags
+//dynamically create the tag buttons based on available tags
 function makeElements(tag) {
   const element = document.createElement("button");
   element.textContent = `${tag}`;
@@ -41,7 +41,7 @@ function makeElements(tag) {
   return element;
 }
 
-//Add tag buttons to the list
+//add tag buttons to the list
 tags.forEach((tag) => {
   const tagBtn = makeElements(tag);
   tagList.appendChild(tagBtn);

@@ -30,7 +30,7 @@ fetch("/auth/check-authentication")
 
 //when clicking on anchor
 loginRef.addEventListener("click", function (event) {
-  loginBtn.click(); // Trigger the click event of the login button
+  loginBtn.click();
 });
 
 //on click, should log out

@@ -35,10 +35,6 @@ router.get("/articles/:articlename", async (req, res) => {
   console.log(articlename);
   const article = await Post.findOne({ title: articlename });
   const { title, content, tags, author, _id } = article;
-  //send the test file modified as a template with the content and title and whatever else
-  // res.send(
-  //   `This is a response for the article ${article.title}, ${article.author}, ${article.tags}, ${article.content}`
-  // );
 
   res.render("article", { title, author, tags, content });
 });
