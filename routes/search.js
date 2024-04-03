@@ -1,5 +1,5 @@
 const express = require("express");
-const db = require("../fakeDB.json");
+
 const { route } = require("./auth");
 const router = express.Router();
 const Post = require("../models/Post");

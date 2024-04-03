@@ -6,7 +6,6 @@ const bcrypt = require("bcrypt");
 router.get("/profile", async (req, res) => {
   const user = req.session.user;
   console.log(user);
-  console.log("yabadabadoo");
   res.render("profile", {
     user,
   });
