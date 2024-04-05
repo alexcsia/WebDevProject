@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/stylesheet.css" />
   </head>
   <body>
-    <form class="center-div" id="SignUpDiv" method="POST" action="/user/edit">
+    <form class="center-div" id="SignUpDiv" method="POST" action="/users/edit">
       <h1
         style="
           margin-left: 125px;
@@ -27,6 +27,7 @@
           name="first_name"
           class="custom-search-bar"
           value="<%= user.first_name %>"
+          id="fname"
           readonly
         />
       </div>
@@ -39,6 +40,7 @@
           name="last_name"
           class="custom-search-bar"
           value="<%= user.last_name %>"
+          id="lname"
           readonly
         />
       </div>
@@ -51,6 +53,7 @@
           name="username"
           class="custom-search-bar"
           value="<%= user.username %>"
+          id="uname"
           readonly
         />
       </div>
@@ -63,6 +66,7 @@
           name="email"
           class="custom-search-bar"
           value="<%= user.email %>"
+          id="email"
           readonly
         />
       </div>
@@ -75,6 +79,7 @@
           name="phone_number"
           class="custom-search-bar"
           value="<%= user.phone_number %>"
+          id="pnumber"
           readonly
         />
       </div>
@@ -87,6 +92,7 @@
           name="password"
           class="custom-search-bar"
           value="<%= user.password %>"
+          id="password"
           readonly
         />
       </div>
@@ -108,5 +114,6 @@
     <div class="fullscreen-background"></div>
     <script src="/scripts/deleteProfile.js"></script>
     <script src="/scripts/editProfile.js"></script>
+    <script src="/scripts/editUserForm.js"></script>
   </body>
 </html>

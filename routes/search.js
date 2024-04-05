@@ -31,19 +31,12 @@ router.get("/find", async (req, res) => {
 
 router.get("/articles/:articlename", async (req, res) => {
   const articlename = req.params.articlename;
-  console.log("req received");
+
   console.log(articlename);
   const article = await Post.findOne({ title: articlename });
   const { title, content, tags, author, _id } = article;
 
   res.render("article", { title, author, tags, content });
-});
-
-//displaying articles
-router.get("/testing", (req, res) => {
-  console.log("request for article");
-
-  res.render("article");
 });
 
 module.exports = router;

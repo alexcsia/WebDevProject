@@ -1,4 +1,3 @@
-//const crtPostRef = document.getElementById("crt-post-ref");
 const loginRef = document.getElementById("login-ref");
 const signupRef = document.getElementById("signup-ref");
 //requierements for buttons
@@ -19,10 +18,7 @@ fetch("/auth/check-authentication")
       loginBtn.textContent = "Log out";
       signupBtn.style.display = "none";
       profileBtn.style.display = "block";
-
-      //signup button disappears
     } else {
-      //crtPostRef.href = "log_in.html";
       signupBtn.style.display = "block";
       profileBtn.style.display = "none";
     }

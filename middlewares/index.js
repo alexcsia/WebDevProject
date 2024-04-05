@@ -5,7 +5,7 @@ const { router: authRoutes } = require("../routes/auth.js");
 const registerRoutes = require("../routes/register.js");
 const searchRoutes = require("../routes/search.js");
 const createRoutes = require("../routes/create.js");
-const userRoutes = require("../routes/user.js");
+const userRoutes = require("../routes/users.js");
 
 function addMiddlewares(app) {
   //EJS config
@@ -31,7 +31,7 @@ function addMiddlewares(app) {
   app.use("/register", registerRoutes);
   app.use("/search", searchRoutes);
   app.use("/create", createRoutes);
-  app.use("/user", userRoutes);
+  app.use("/users", userRoutes);
 }
 
 module.exports = addMiddlewares;

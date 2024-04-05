@@ -22,12 +22,12 @@ router.post("/submit", async (req, res) => {
 
     console.log(newUser);
 
-    res.status(200).redirect("/");
+    res.redirect("/");
   } catch (error) {
     console.error("Error creating user:", error);
     console.log(error);
-    console.log("yaaaaaapp");
-    res.status(500).send("Internal Server Error");
+
+    return res.status(500).json({ message: "Error: User already exists!" });
   }
 });
 

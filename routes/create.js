@@ -4,8 +4,6 @@ const Post = require("../models/Post");
 const session = require("express-session");
 
 router.post("/newPost", async (req, res) => {
-  console.log("Session:", req.session);
-  console.log("User in session:", req.session.user);
   try {
     const { title, content, tags } = req.body;
 
@@ -19,10 +17,12 @@ router.post("/newPost", async (req, res) => {
       },
     });
     console.log("post created successfully");
-    res.status(200).redirect("/");
+    res.redirect("/");
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "error while creating post" });
+    return res
+      .status(500)
+      .json({ message: "Error while creating post: Title already exists" });
   }
 });
 

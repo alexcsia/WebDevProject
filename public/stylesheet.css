@@ -287,8 +287,8 @@ input {
 }
 
 #featured-tags {
-  position: absolute; /* Position the list relative to its parent */
-  top: 300px; /* Adjust top position based on your needs */
+  position: absolute;
+  top: 300px;
   left: 20%;
   right: 20%;
 }
@@ -323,7 +323,7 @@ input {
   width: 100px;
   height: 40px;
   border-radius: 10px;
-  /*margin-left: -20px;*/
+
   margin-top: auto;
 }
 #content-space {

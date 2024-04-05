@@ -10,22 +10,21 @@ let isAuthenticated = false;
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  console.log("received login request", req.body);
-
   try {
     const user = await User.findOne({ username });
+    console.log(user);
     if (!user) {
-      return res.json({ message: "Invalid login credentials" });
+      return res.status(401).json({ message: "Invalid login credentials" });
     }
 
     const correctPassword = await bcrypt.compare(password, user.password);
     if (!correctPassword) {
       console.log("password incorrect");
-      return res.json({ message: "Invalid login credentials" });
+      return res.status(401).json({ message: "Invalid login credentials" });
     }
 
     req.session.user = user; //store user data in session
-    console.log("success");
+    console.log("user successfully logged in");
 
     isAuthenticated = true;
 
