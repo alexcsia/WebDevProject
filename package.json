@@ -5,8 +5,7 @@
   "main": "database.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "postbuild": "npm list"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +16,7 @@
     "supertest-session": "^5.0.1"
   },
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
   }
 }
