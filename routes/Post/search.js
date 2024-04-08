@@ -33,7 +33,8 @@ router.get("/articles/:articlename", async (req, res) => {
   const articlename = req.params.articlename;
 
   console.log(articlename);
-  const article = await Post.findOne({ title: articlename });
+  const article = await Post.findOne({ title: articlename }).timeout(5000);
+
   const { title, content, tags, author, _id } = article;
 
   res.render("article", { title, author, tags, content });
