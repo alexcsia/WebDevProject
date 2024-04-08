@@ -11,7 +11,7 @@ createPostForm.addEventListener("submit", async (event) => {
   const requestBody = `title=${title}&content=${content}&tags=${tags}`;
 
   let errorMessage = "";
-  const response = await fetch("/create/newPost", {
+  const response = await fetch("/post/new", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

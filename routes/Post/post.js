@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Post = require("../models/Post");
+const Post = require("../../models/Post");
 const session = require("express-session");
 
-router.post("/newPost", async (req, res) => {
+router.post("/new", async (req, res) => {
   try {
     const { title, content, tags } = req.body;
 

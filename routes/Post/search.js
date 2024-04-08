@@ -1,8 +1,8 @@
 const express = require("express");
 
-const { route } = require("./auth");
+const { route } = require("../User/auth");
 const router = express.Router();
-const Post = require("../models/Post");
+const Post = require("../../models/Post");
 
 router.get("/find", async (req, res) => {
   const searchedString = req.query.searchTerm;

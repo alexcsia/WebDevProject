@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 exports.router = router;
 const session = require("express-session");
-const User = require("../models/User");
+const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 
 let isAuthenticated = false;

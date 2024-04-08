@@ -1,11 +1,11 @@
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
-const { router: authRoutes } = require("../routes/auth.js");
-const registerRoutes = require("../routes/register.js");
-const searchRoutes = require("../routes/search.js");
-const createRoutes = require("../routes/create.js");
-const userRoutes = require("../routes/users.js");
+const { router: authRoutes } = require("../routes/User/auth.js");
+const registerRoutes = require("../routes/User/register.js");
+const searchRoutes = require("../routes/Post/search.js");
+const createRoutes = require("../routes/Post/post.js");
+const userRoutes = require("../routes/User/users.js");
 
 function addMiddlewares(app) {
   //EJS config
@@ -30,7 +30,7 @@ function addMiddlewares(app) {
   app.use("/auth", authRoutes);
   app.use("/register", registerRoutes);
   app.use("/search", searchRoutes);
-  app.use("/create", createRoutes);
+  app.use("/post", createRoutes);
   app.use("/users", userRoutes);
 }
 

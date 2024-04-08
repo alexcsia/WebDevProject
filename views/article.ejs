@@ -17,7 +17,7 @@
     <main>
       <article>
         <h2 class="align-heading"><%=title%></h2>
-        <p class="align-heading" id="date">Published on January 1, 2024</p>
+        <!-- <p class="align-heading" id="date">Published on January 1, 2024</p> -->
         <div class="post-content">
           <textarea
             id="userContent"
@@ -33,14 +33,15 @@
       </article>
     </main>
 
-    <a href="/sign_up.html">
-      <button class="custom-button sign-up-btn">Sign up</button>
+    <a href="/signup.html" id=" signup-ref">
+      <button class="custom-button sign-up-btn" id="signup">Sign up</button>
     </a>
-    <a href="/log_in.html">
-      <button class="custom-button log-in-btn">Log in</button>
+    <a href="/login.html" id="login-ref">
+      <button class="custom-button log-in-btn" id="login">Log in</button>
     </a>
     <a href="/index.html">
       <button class="custom-button btn-left">Home</button>
     </a>
+    <script src="/scripts/login.js"></script>
   </body>
 </html>

@@ -18,6 +18,12 @@ const postSchema = new mongoose.Schema({
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
   },
+  // TODO: commenting system
+  comments: {
+    user: { type: String },
+    comment: { type: String },
+    date: { type: Date },
+  },
 });
 
 module.exports = mongoose.model("Post", postSchema);

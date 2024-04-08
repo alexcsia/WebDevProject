@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const session = require("express-session");
-const User = require("../models/User");
+const User = require("../../models/User");
 const bcrypt = require("bcrypt");
 
 router.get("/profile", async (req, res) => {
@@ -39,18 +39,12 @@ router.post("/edit", async (req, res) => {
       req.body;
 
     const user = req.session.user;
-    let hashedPasswordToChange;
-    let passwordUnchanged;
-    let passwordsMatch;
+    let hashedPassword;
 
     if (password.length === 0) {
-      throw new Error("Invalid password");
-    } else if (password.length < 60) {
-      hashedPasswordToChange = await bcrypt.hash(password, 10);
-
-      passwordUnchanged = await bcrypt.compare(password, user.password);
+      password = req.session.password;
     } else {
-      passwordsMatch = await bcrypt.compareSync(password, user.password);
+      hashedPassword = await bcrypt.hash(password, 10);
     }
 
     const updatedInfo = {
@@ -60,17 +54,14 @@ router.post("/edit", async (req, res) => {
         email: email,
         phone_number: phone_number,
         username: username,
+        password: hashedPassword,
       },
     };
-
-    // if it changed, update the password field in the database
-    if (!passwordUnchanged) {
-      updatedInfo.$set.password = hashedPasswordToChange;
-    } else if (!passwordsMatch) {
-      updatedInfo.$set.password = password;
-    }
-
     const updateUser = await User.updateOne({ _id: user._id }, updatedInfo);
+    const newUser = await User.findById(user._id);
+    req.session.user = newUser;
+
+    console.log(req.session.user);
 
     res.sendStatus(200);
   } catch (error) {
