@@ -33,7 +33,15 @@ router.get("/articles/:articlename", async (req, res) => {
   const articlename = req.params.articlename;
 
   console.log(articlename);
-  const article = await Post.findOne({ title: articlename }).timeout(5000);
+
+  // delay of 5 seconds before query
+  await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  const article = await Post.findOne({ title: articlename });
+
+  if (!article) {
+    return res.status(404).send("Article not found");
+  }
 
   const { title, content, tags, author, _id } = article;
 
