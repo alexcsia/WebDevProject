@@ -3,6 +3,10 @@ const router = express.Router();
 const session = require("express-session");
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
+const {
+  deleteUser,
+  editProfile,
+} = require("../../helperFunctions/userFunctions");
 
 router.get("/profile", async (req, res) => {
   const user = req.session.user;
@@ -15,21 +19,12 @@ router.get("/profile", async (req, res) => {
 router.delete("/delete", async (req, res) => {
   try {
     const user = req.session.user;
-    if (!user) {
-      return res.status(401).send("Unauthorized");
-    }
 
-    const delUser = await User.deleteOne({ _id: user._id });
-    if (delUser.deletedCount === 1) {
-      console.log("User deleted successfully");
-      res.sendStatus(200);
-    } else {
-      console.log("User not deleted");
-      res.status(500).send("User not deleted");
-    }
+    await deleteUser(user);
+    res.sendStatus(200);
   } catch (error) {
     console.error("Error deleting user:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Failed to delete user");
   }
 });
 
@@ -40,25 +35,22 @@ router.post("/edit", async (req, res) => {
 
     const user = req.session.user;
     let hashedPassword;
-
     if (password.length === 0) {
-      password = req.session.password;
+      password = user.password;
     } else {
       hashedPassword = await bcrypt.hash(password, 10);
     }
 
-    const updatedInfo = {
-      $set: {
-        first_name: first_name,
-        last_name: last_name,
-        email: email,
-        phone_number: phone_number,
-        username: username,
-        password: hashedPassword,
-      },
-    };
-    const updateUser = await User.updateOne({ _id: user._id }, updatedInfo);
-    const newUser = await User.findById(user._id);
+    let newUser = await editProfile(
+      first_name,
+      last_name,
+      username,
+      email,
+      phone_number,
+      hashedPassword,
+      user
+    );
+
     req.session.user = newUser;
 
     console.log(req.session.user);

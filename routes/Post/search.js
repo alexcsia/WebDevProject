@@ -1,8 +1,11 @@
 const express = require("express");
-
-const { route } = require("../User/auth");
 const router = express.Router();
 const Post = require("../../models/Post");
+const {
+  postCountByTag,
+  findArticle,
+  getArticle,
+} = require("../../helperFunctions/postFunctions");
 
 router.get("/find", async (req, res) => {
   const searchedString = req.query.searchTerm;
@@ -11,13 +14,7 @@ router.get("/find", async (req, res) => {
     .filter((term) => term.trim() !== "");
 
   try {
-    const articles = await Post.find({
-      $or: [
-        //case insensitive search, one query for all searched terms per title/tags
-        { title: { $regex: new RegExp(searchTerms.join("|"), "i") } },
-        { tags: { $regex: new RegExp(searchTerms.join("|"), "i") } },
-      ],
-    });
+    const articles = await findArticle(searchTerms);
 
     res.render("searchResults", {
       searchTerms,
@@ -31,21 +28,24 @@ router.get("/find", async (req, res) => {
 
 router.get("/articles/:articlename", async (req, res) => {
   const articlename = req.params.articlename;
-
   console.log("Requested article:", articlename);
 
-  // delay of 5 seconds before query
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  try {
+    const { title, content, tags, author } = await getArticle(articlename);
 
-  const article = await Post.findOne({ title: articlename });
-
-  if (!article) {
-    return res.status(404).send("Article not found");
+    res.render("article", { title, author, tags, content });
+  } catch (error) {
+    res.status(404).json({ error: "Article not found" });
   }
+});
 
-  const { title, content, tags, author, _id } = article;
-
-  res.render("article", { title, author, tags, content });
+router.get("/test", async (req, res) => {
+  try {
+    const result = await postCountByTag();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 module.exports = router;

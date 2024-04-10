@@ -16,6 +16,7 @@ loginForm.addEventListener("submit", async (event) => {
     },
     body: requestBody,
   });
+
   if (response.status != 200) {
     const errorData = await response.json();
     const errorMessage = errorData.message;

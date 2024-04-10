@@ -6,11 +6,10 @@ createPostForm.addEventListener("submit", async (event) => {
   const title = document.getElementById("title-space").value;
   const content = document.getElementById("content-space").value;
   const tags = document.getElementById("tags-space").value;
-
+  let errorMessage = "";
   // url encoding the request body
   const requestBody = `title=${title}&content=${content}&tags=${tags}`;
 
-  let errorMessage = "";
   const response = await fetch("/post/new", {
     method: "POST",
     headers: {

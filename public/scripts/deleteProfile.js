@@ -12,7 +12,9 @@ deleteBtn.addEventListener("click", async () => {
     }
 
     alert("User deleted successfully");
+
     await fetch("/auth/logout");
+
     isAuthenticated = false;
     window.location.href = "/";
   } catch (error) {

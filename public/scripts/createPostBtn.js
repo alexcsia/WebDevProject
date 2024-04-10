@@ -7,7 +7,7 @@ fetch("/auth/check-authentication")
     const isAuthenticated = data.isAuthenticated;
     console.log("user is authenticated " + isAuthenticated);
 
-    //Changing buttons functionalities based on authentication
+    //changing buttons functionalities based on authentication
     if (isAuthenticated) {
       crtPostRef.href = "/createPost.html";
     } else {

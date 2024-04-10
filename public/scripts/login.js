@@ -12,7 +12,6 @@ fetch("/auth/check-authentication")
     isAuthenticated = data.isAuthenticated;
     console.log("user is authenticated " + isAuthenticated);
 
-    //Changing buttons displays based on authentication
     if (isAuthenticated) {
       //login button changes to logout button
       loginBtn.textContent = "Log out";
@@ -24,7 +23,6 @@ fetch("/auth/check-authentication")
     }
   });
 
-//when clicking on anchor
 loginRef.addEventListener("click", function (event) {
   loginBtn.click();
 });

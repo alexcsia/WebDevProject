@@ -1,6 +1,7 @@
 const editBtn = document.getElementById("editBtn");
 const form = document.getElementById("SignUpDiv");
 let edit = false;
+
 editBtn.addEventListener("click", () => {
   if (!edit) {
     const inputs = form.querySelectorAll("input");
@@ -11,6 +12,7 @@ editBtn.addEventListener("click", () => {
       input.style.color = "black";
       editBtn.style.backgroundColor = "#316caa";
     });
+
     edit = true;
   } else {
     const inputs = form.querySelectorAll("input");

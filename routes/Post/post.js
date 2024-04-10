@@ -1,28 +1,22 @@
 const express = require("express");
 const router = express.Router();
-const Post = require("../../models/Post");
 const session = require("express-session");
+const { createPost } = require("../../helperFunctions/postFunctions");
 
 router.post("/new", async (req, res) => {
   try {
     const { title, content, tags } = req.body;
+    const { first_name, last_name } = req.session.user;
 
-    const newPost = await Post.create({
-      title: title,
-      content: content,
-      tags: tags,
-      author: {
-        first_name: req.session.user.first_name,
-        last_name: req.session.user.last_name,
-      },
-    });
+    await createPost(title, content, tags, first_name, last_name);
+
     console.log("post created successfully");
     res.redirect("/");
   } catch (error) {
     console.error(error);
     return res
       .status(500)
-      .json({ message: "Error while creating post: Title already exists" });
+      .json({ message: "An article with the same title already exists!" });
   }
 });
 

@@ -20,6 +20,7 @@ signUpForm.addEventListener("submit", async (event) => {
     },
     body: requestBody,
   });
+
   if (response.status != 200) {
     const errorData = await response.json();
     errorMessage = errorData.message;
