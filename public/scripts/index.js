@@ -13,12 +13,29 @@ const tags = [
   "#gaming",
   "#business",
   "#education",
-  "#design",
-  "#travelling",
-  "#music",
+  "#programming",
+  "#health",
+  "#food",
+  "#fitness",
+  "#photography",
+  "#books",
+  "#fashion",
+  "#diy",
+  "#nature",
+  "#science",
+  "#history",
+  "#movies",
+  "#technology",
+  "#cooking",
+  "#parenting",
+  "#motivation",
+  "#finance",
+  "#careeradvice",
+  "#relationships",
+  "#sports",
 ];
 
-//View tags list
+//view tags list
 btn_tags.addEventListener("click", () => {
   if (tagList.style.display === "none") {
     //visible tag list

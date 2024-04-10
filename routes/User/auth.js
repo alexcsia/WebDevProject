@@ -10,30 +10,36 @@ let isAuthenticated = false;
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  try {
-    const user = await User.findOne({ username });
-    console.log(user);
-    if (!user) {
-      return res.status(401).json({ message: "Invalid login credentials" });
-    }
+  const loginResponse = await handleLogin(username, password);
 
-    const correctPassword = await bcrypt.compare(password, user.password);
-    if (!correctPassword) {
-      console.log("password incorrect");
-      return res.status(401).json({ message: "Invalid login credentials" });
-    }
-
-    req.session.user = user; //store user data in session
-    console.log("user successfully logged in");
-
+  if (loginResponse.success) {
+    req.session.user = loginResponse.user;
     isAuthenticated = true;
-
     res.redirect("/");
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+  } else {
+    res.status(401).json(loginResponse);
   }
 });
+
+const handleLogin = async (user, password) => {
+  try {
+    const foundUser = await User.findOne({ username: user });
+    if (!foundUser) {
+      return { success: false, message: "Invalid login credentials" };
+    }
+
+    const correctPassword = await bcrypt.compare(password, foundUser.password);
+    if (!correctPassword) {
+      return { success: false, message: "Invalid login credentials" };
+    }
+
+    //return object containing user
+    return { success: true, user: foundUser };
+  } catch (error) {
+    console.error(error);
+    return { success: false, message: "Internal server error" };
+  }
+};
 
 router.get("/check-authentication", (req, res) => {
   res.json({ isAuthenticated });

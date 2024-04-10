@@ -6,10 +6,35 @@ const router = express.Router();
 router.post("/submit", async (req, res) => {
   console.log(req.body);
 
-  try {
-    const { first_name, last_name, username, email, phone_number, password } =
-      req.body;
+  const { first_name, last_name, username, email, phone_number, password } =
+    req.body;
 
+  const handleRegister = await registerUser(
+    first_name,
+    last_name,
+    username,
+    email,
+    phone_number,
+    password
+  );
+
+  if (handleRegister.succes) {
+    res.redirect("/");
+    console.log(handleRegister.message);
+  } else {
+    return res.status(500).json(handleRegister);
+  }
+});
+
+const registerUser = async (
+  first_name,
+  last_name,
+  username,
+  email,
+  phone_number,
+  password
+) => {
+  try {
     //create a new user
     const newUser = await User.create({
       first_name: first_name,
@@ -22,13 +47,13 @@ router.post("/submit", async (req, res) => {
 
     console.log(newUser);
 
-    res.redirect("/");
-  } catch (error) {
-    console.error("Error creating user:", error);
-    console.log(error);
-
-    return res.status(500).json({ message: "Error: User already exists!" });
+    return { succes: true, message: "User created successfully!" };
+  } catch {
+    return {
+      succes: false,
+      message: "Error creating user: Username/Email already exists!",
+    };
   }
-});
+};
 
 module.exports = router;

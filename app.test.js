@@ -4,7 +4,7 @@ const assert = require("assert");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const request = require("supertest");
-const session = require("supertest-session");
+const Post = require("./models/Post");
 
 //Commands to run the tests:
 //in cmd line:
@@ -17,14 +17,13 @@ jest.mock("./models/User", () => ({
   findOne: jest.fn(),
 }));
 
+jest.mock("./models/Post", () => ({
+  findOne: jest.fn(),
+}));
+
 jest.mock("bcrypt", () => ({
   compare: jest.fn(),
 }));
-
-const mockSession = {
-  user: null,
-  save: jest.fn(),
-};
 
 beforeAll((done) => {
   server = app.listen(3001, done);
@@ -34,8 +33,9 @@ afterAll((done) => {
   server.close(done);
 });
 describe("POST /submit", () => {
-  describe("given user register values", () => {
+  describe("when user registers correctly", () => {
     test("should respond with 302 status code", async () => {
+      // Assert redirect or other response details if needed
       // request body
       const reqBody = {
         first_name: "test_fn",
@@ -46,16 +46,73 @@ describe("POST /submit", () => {
         password: "test_password",
       };
 
-      //make request
+      // make request
       const response = await request(app)
         .post("/register/submit")
         .send(reqBody);
 
-      // asserting the response status code is a redirect
+      // assert the response status code is a redirect
       expect(response.statusCode).toBe(302);
 
-      // asserting that User.create() was called with the correct req body
+      // assert that User.create() was called with the correct req body
       expect(User.create).toHaveBeenCalledWith(reqBody);
+    });
+  });
+  describe("when registering with already existing credentials", () => {
+    test("should respond with 500 status code and error message", async () => {
+      const { registerUser } = require("./routes/User/register.js");
+      const mockedRegisteringUser = jest.spyOn(registeringUser, "registerUser");
+      mockedRegisterUser.mockResolvedValueOnce({
+        success: false,
+        message: "Nope",
+      });
+
+      // Call the function or perform any operation that triggers registerUser
+      const testing = await registeringUser.registerUser(
+        "test_fn",
+        "test_ln",
+        "test@email",
+        "test_pn",
+        "test_username",
+        "test_password"
+      );
+
+      // Check if the return value matches the mocked value
+      console.log("HERE YOU GO", testing);
+      // request body
+      const reqBody = {
+        first_name: "test_fn",
+        last_name: "test_ln",
+        email: "test@email",
+        phone_number: "test_pn",
+        username: "test_username",
+        password: "test_password",
+      };
+
+      // mock registerUser function
+      const mockedRegisterUser = jest.spyOn(
+        require("./routes/User/register"),
+        "registerUser"
+      );
+      mockedRegisterUser.mockResolvedValueOnce({
+        success: false,
+        message: "Error creating user: Username/Email already exists!",
+      });
+
+      // make request
+      const response = await request(app)
+        .post("/register/submit")
+        .send(reqBody);
+
+      expect(response.statusCode).toBe(500);
+
+      expect(response.body).toEqual({
+        success: false,
+        message: "Error creating user: Username/Email already exists!",
+      });
+
+      // assert that User.create() was not called
+      expect(User.create).not.toHaveBeenCalled();
     });
   });
 });
@@ -76,29 +133,8 @@ describe("POST /login", () => {
 
       expect(response.statusCode).toBe(302);
     });
-    // test("user object should be stored in session when authenticated", async () => {
-    //   const userData = {
-    //     username: "testuser",
-    //     password: "testpassword",
-    //   };
-
-    //   //findOne will always return the userData
-    //   User.findOne.mockResolvedValueOnce(userData);
-    //   //mocking bcrypt to always return true
-    //   bcrypt.compare.mockResolvedValueOnce(true);
-
-    //   const testSession = session(app); // Initialize supertest-session with your Express app
-
-    //   const response = await testSession.post("/auth/login").send(userData);
-
-    //   // Access session data from the testSession object
-    //   console.log(testSession._store); // Log the session data to see its contents
-    //   expect(testSession._store).toHaveProperty("user");
-    //   expect(testSession._store).toHaveProperty("user"); // Check if user exists in session
-    //   expect(testSession._store.user).toEqual(userData); // Assert user data in session
-    // });
   });
-  describe("when user is not authenticated", () => {
+  describe("when user is not authenticated correctly", () => {
     test("should respond with 401 status code and error message", async () => {
       const userData = {
         username: "testuser",
@@ -108,17 +144,46 @@ describe("POST /login", () => {
       User.findOne.mockResolvedValueOnce(userData);
       //mocking bcrypt to always return false
       bcrypt.compare.mockResolvedValueOnce(false);
+
       const response = await request(app).post("/auth/login").send(userData);
+
       expect(response.statusCode).toBe(401);
-      expect(response.body).toEqual({ message: "Invalid login credentials" });
+      const responseBody = response.body;
+      expect(responseBody).toEqual({
+        success: false,
+        message: "Invalid login credentials",
+      });
     });
   });
 });
 
-describe("POST /logout", () => {
-  describe("when user is authenticated", () => {
-    test("should respond with 200 status code", async () => {
-      // Test logic for testing GET /profile route when user is authenticated...
+describe("GET /articles/:articlename", () => {
+  describe("when user clicks on an article", () => {
+    test("should retrieve the rendered article", async () => {
+      const articlename = "test-article";
+      const mockArticle = {
+        title: "Test Article",
+        content: "This is a test article.",
+        //tags currently do not appear in the article
+        // tags: "#test",
+        author: { first_name: "first name", last_name: "last name" },
+      };
+
+      console.log("Mock article:", mockArticle);
+
+      Post.findOne.mockResolvedValueOnce(mockArticle);
+
+      const response = await request(app).get(
+        `/search/articles/${articlename}`
+      );
+
+      console.log("Response:", response.body);
+      expect(response.statusCode).toBe(200);
+
+      expect(response.text).toContain(mockArticle.title);
+      expect(response.text).toContain(mockArticle.content);
+      expect(response.text).toContain(mockArticle.author.first_name);
+      expect(response.text).toContain(mockArticle.author.last_name);
     });
   });
 });
