@@ -35,7 +35,7 @@ router.get("/articles/:articlename", async (req, res) => {
   console.log("Requested article:", articlename);
 
   // delay of 5 seconds before query
-  //await new Promise((resolve) => setTimeout(resolve, 5000));
+  await new Promise((resolve) => setTimeout(resolve, 5000));
 
   const article = await Post.findOne({ title: articlename });
 
