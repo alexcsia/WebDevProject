@@ -69,19 +69,23 @@ const editProfile = async (
   hashedPassword,
   user
 ) => {
-  const updatedInfo = {
-    $set: {
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      phone_number: phone_number,
-      username: username,
-      password: hashedPassword ? hashedPassword : undefined,
-    },
-  };
-  const updateUser = await User.updateOne({ _id: user._id }, updatedInfo);
-  const newUser = await User.findById(user._id);
-  return newUser;
+  try {
+    const updatedInfo = {
+      $set: {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
+        phone_number: phone_number,
+        username: username,
+        password: hashedPassword ? hashedPassword : undefined,
+      },
+    };
+    const updateUser = await User.updateOne({ _id: user._id }, updatedInfo);
+    const newUser = await User.findById(user._id);
+    return newUser;
+  } catch (error) {
+    console.log("*********************************************");
+  }
 };
 
 module.exports = { handleLogin, registerUser, deleteUser, editProfile };

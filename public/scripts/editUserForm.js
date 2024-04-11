@@ -21,8 +21,7 @@ editForm.addEventListener("submit", async (event) => {
   });
   if (response.status != 200) {
     const errorData = await response.json();
-    const errorMessage = errorData.message;
-    alert(errorMessage);
+    alert(errorData);
   } else {
     window.location.href = "/";
   }

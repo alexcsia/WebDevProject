@@ -51,6 +51,10 @@ router.post("/edit", async (req, res) => {
       user
     );
 
+    if (newUser === undefined) {
+      throw new Error("This email/username is already in use");
+    }
+
     req.session.user = newUser;
 
     console.log(req.session.user);
@@ -58,7 +62,13 @@ router.post("/edit", async (req, res) => {
     res.sendStatus(200);
   } catch (error) {
     console.error("Error updating user:", error);
-    res.status(500).send("Internal Server Error");
+    console.log(
+      JSON.stringify({
+        message: error.message,
+        stack: error.stack,
+      })
+    );
+    res.status(500).json(error.message);
   }
 });
 
