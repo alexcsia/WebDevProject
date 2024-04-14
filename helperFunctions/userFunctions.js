@@ -30,7 +30,16 @@ const registerUser = async (
   password
 ) => {
   try {
-    //create a new user
+    console.log(
+      "I HAVE RECEIVED REQ BODY:",
+      first_name,
+      last_name,
+      username,
+      email,
+      phone_number,
+      password
+    );
+    // create a new user
     const newUser = await User.create({
       first_name: first_name,
       last_name: last_name,
@@ -40,12 +49,12 @@ const registerUser = async (
       password: password,
     });
 
-    console.log(newUser);
+    console.log("A new user has been created:", newUser);
 
-    return { succes: true, message: "User created successfully!" };
-  } catch {
+    return { success: true, message: "User created successfully!" };
+  } catch (error) {
     return {
-      succes: false,
+      success: false,
       message: "Error creating user: Username/Email already exists!",
     };
   }
@@ -84,7 +93,7 @@ const editProfile = async (
     const newUser = await User.findById(user._id);
     return newUser;
   } catch (error) {
-    console.log("*********************************************");
+    console.log(error);
   }
 };
 

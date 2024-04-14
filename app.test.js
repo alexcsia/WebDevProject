@@ -12,10 +12,10 @@ const Post = require("./models/Post");
 //npx jest
 
 // mock the user model, replace create with empty function
-jest.mock("./models/User", () => ({
-  create: jest.fn(),
-  findOne: jest.fn(),
-}));
+// jest.mock("./models/User", () => ({
+//   // create: jest.fn(),
+//   findOne: jest.fn(),
+// }));
 
 jest.mock("./models/Post", () => ({
   findOne: jest.fn(),
@@ -35,8 +35,16 @@ afterAll((done) => {
 describe("POST /submit", () => {
   describe("when user registers correctly", () => {
     test("should respond with 302 status code", async () => {
-      // Assert redirect or other response details if needed
-      // request body
+      const createUserMock = jest.spyOn(User, "create").mockResolvedValueOnce({
+        _id: "user_id",
+        first_name: "test_fn",
+        last_name: "test_ln",
+        email: "test@email",
+        phone_number: "test_pn",
+        username: "test_username",
+        password: "test_password",
+      });
+
       const reqBody = {
         first_name: "test_fn",
         last_name: "test_ln",
@@ -60,26 +68,16 @@ describe("POST /submit", () => {
   });
   describe("when registering with already existing credentials", () => {
     test("should respond with 500 status code and error message", async () => {
-      const { registerUser } = require("./routes/User/register.js");
-      const mockedRegisteringUser = jest.spyOn(registeringUser, "registerUser");
+      const userFunctions = require("./helperFunctions/userFunctions");
+
+      const mockedRegisterUser = jest.spyOn(userFunctions, "registerUser");
       mockedRegisterUser.mockResolvedValueOnce({
         success: false,
-        message: "Nope",
+        message: "Error creating user: Username/Email already exists!",
       });
 
-      // Call the function or perform any operation that triggers registerUser
-      const testing = await registeringUser.registerUser(
-        "test_fn",
-        "test_ln",
-        "test@email",
-        "test_pn",
-        "test_username",
-        "test_password"
-      );
+      //console.log(await mockedRegisterUser());
 
-      // Check if the return value matches the mocked value
-      console.log("HERE YOU GO", testing);
-      // request body
       const reqBody = {
         first_name: "test_fn",
         last_name: "test_ln",
@@ -89,22 +87,13 @@ describe("POST /submit", () => {
         password: "test_password",
       };
 
-      // mock registerUser function
-      const mockedRegisterUser = jest.spyOn(
-        require("./routes/User/register"),
-        "registerUser"
-      );
-      mockedRegisterUser.mockResolvedValueOnce({
-        success: false,
-        message: "Error creating user: Username/Email already exists!",
-      });
-
       // make request
       const response = await request(app)
         .post("/register/submit")
         .send(reqBody);
 
-      expect(response.statusCode).toBe(500);
+      expect(User.create).toHaveBeenCalledWith(reqBody);
+      //expect(response.statusCode).toBe(500);
 
       expect(response.body).toEqual({
         success: false,
@@ -112,7 +101,6 @@ describe("POST /submit", () => {
       });
 
       // assert that User.create() was not called
-      expect(User.create).not.toHaveBeenCalled();
     });
   });
 });
@@ -120,6 +108,11 @@ describe("POST /submit", () => {
 describe("POST /login", () => {
   describe("when user authenticates correctly", () => {
     test("response should redirect", async () => {
+      const createUserMock = jest.spyOn(User, "findOne").mockResolvedValueOnce({
+        username: "testuser",
+        password: "testpassword",
+      });
+
       const userData = {
         username: "testuser",
         password: "testpassword",

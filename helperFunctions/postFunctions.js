@@ -4,30 +4,31 @@ const postCountByTag = async () => {
   try {
     const postCount = await Post.aggregate([
       {
-        $unwind: "$tags", // Deconstruct the tags array
+        $unwind: "$tags", // deconstruct the tags array
       },
       {
         $addFields: {
-          // Add a new field to split tags into an array
+          // add a new field to split tags into an array
           individualTags: {
-            $split: ["$tags", " "], // Split the tags by space
+            $split: ["$tags", " "],
           },
         },
       },
       {
-        $unwind: "$individualTags", // Deconstruct the individualTags array
+        $unwind: "$individualTags", // deconstruct the individualTags array
       },
       {
+        // group by individual tag and count the occurrences of each tag
         $group: {
-          _id: "$individualTags", // Group by individual tag
-          count: { $sum: 1 }, // Count the occurrences of each tag
+          _id: "$individualTags",
+          count: { $sum: 1 },
         },
       },
       {
         $project: {
-          _id: 0, // Exclude _id field from output
-          tag: "$_id", // Rename _id field to tag
-          count: 1, // Include count field in output
+          _id: 0, // exclude _id field from output
+          tag: "$_id", // rename _id field to tag
+          count: 1, // include count field in output
         },
       },
     ]);
