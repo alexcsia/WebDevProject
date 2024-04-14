@@ -34,34 +34,36 @@ User Profile: Authenticated users have access to their profile page. On the prof
 
 ### Dependencies
 
-**bcrypt:** For password hashing and encryption.
-**dotenv:** For loading environment variables from a .env file.
-**ejs:** For server-side templating.
-**express:** Web framework for building the application.
-**express-session:** For managing user sessions.
-**mongoose:** MongoDB object modeling tool.
+- **bcrypt:** For password hashing and encryption.
+- **dotenv:** For loading environment variables from a .env file.
+- **ejs:** For server-side templating.
+- **express:** Web framework for building the application.
+- **express-session:** For managing user sessions.
+- **mongoose:** MongoDB object modeling tool.
 
 ### Development Dependencies:
 
-**jest:** Testing framework
-**supertest:** Assertion library
+- **jest:** Testing framework
+- **supertest:** Assertion library
 
 ### Configuration
 
 1. **Create a `.env` file in the root directory of the project.**
 2. **Add the following environment variables to the `.env` file:**
-   PORT=3000
-   MONGODB_URI=mongodb://localhost:27017/blogwebsite
-   SESSION_SECRET=session_secret
+   - PORT=3000
+   - MONGODB_URI=mongodb://localhost:27017/blogwebsite
+   - SESSION_SECRET=session_secret
 
 ### Starting the Server
 
 To start the server, run the following command:
-**node server.js**
+
+- **node server.js**
 
 ### Running the tests
 
 To run the tests, run the following command:
-**npx jest**
+
+- **npx jest**
 
 The tests are written using Jest and Supertest.
