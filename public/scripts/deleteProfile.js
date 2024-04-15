@@ -5,7 +5,6 @@ deleteBtn.addEventListener("click", async () => {
     const response = await fetch("/users/delete", {
       method: "DELETE",
     });
-    console.log("attempt");
 
     if (!response.ok) {
       throw new Error("Failed to delete user");

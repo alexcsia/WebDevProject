@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const session = require("express-session");
-const { createPost } = require("../../helperFunctions/postFunctions");
+const { createPost } = require("../../services/postFunctions");
 
 router.post("/new", async (req, res) => {
   try {

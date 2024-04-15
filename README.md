@@ -6,6 +6,8 @@ This is a blog website with minimal functionality created for learning purposes.
 
 ## Features
 
+**This project is a work in progress**
+
 User Authentication: Users can create accounts, log in, and log out. User authentication ensures that only authorized users can create, edit, and delete posts.
 
 Post Creation: Authenticated users can create new posts(articles). A form is provided where users can enter the title, content, and optionally, tags for their post.

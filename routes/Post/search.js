@@ -5,7 +5,7 @@ const {
   postCountByTag,
   findArticle,
   getArticle,
-} = require("../../helperFunctions/postFunctions");
+} = require("../../services/postFunctions");
 
 router.get("/find", async (req, res) => {
   const searchedString = req.query.searchTerm;
@@ -36,15 +36,6 @@ router.get("/articles/:articlename", async (req, res) => {
     res.render("article", { title, author, tags, content });
   } catch (error) {
     res.status(404).json({ error: "Article not found" });
-  }
-});
-
-router.get("/test", async (req, res) => {
-  try {
-    const result = await postCountByTag();
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
   }
 });
 

@@ -7,9 +7,9 @@ createPostForm.addEventListener("submit", async (event) => {
   const content = document.getElementById("content-space").value;
   const tags = document.getElementById("tags-space").value;
   let errorMessage = "";
+
   // url encoding the request body
   const requestBody = `title=${title}&content=${content}&tags=${tags}`;
-
   const response = await fetch("/post/new", {
     method: "POST",
     headers: {
@@ -17,6 +17,7 @@ createPostForm.addEventListener("submit", async (event) => {
     },
     body: requestBody,
   });
+
   if (response.status != 200) {
     const errorData = await response.json();
     errorMessage = errorData.message;

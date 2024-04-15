@@ -30,15 +30,6 @@ const registerUser = async (
   password
 ) => {
   try {
-    console.log(
-      "I HAVE RECEIVED REQ BODY:",
-      first_name,
-      last_name,
-      username,
-      email,
-      phone_number,
-      password
-    );
     // create a new user
     const newUser = await User.create({
       first_name: first_name,

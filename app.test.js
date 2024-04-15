@@ -11,12 +11,6 @@ const Post = require("./models/Post");
 //set NODE_OPTIONS=--experimental-vm-modules
 //npx jest
 
-// mock the user model, replace create with empty function
-// jest.mock("./models/User", () => ({
-//   // create: jest.fn(),
-//   findOne: jest.fn(),
-// }));
-
 jest.mock("./models/Post", () => ({
   findOne: jest.fn(),
 }));
@@ -68,15 +62,13 @@ describe("POST /submit", () => {
   });
   describe("when registering with already existing credentials", () => {
     test("should respond with 500 status code and error message", async () => {
-      const userFunctions = require("./helperFunctions/userFunctions");
+      const userFunctions = require("./services/userFunctions");
 
       const mockedRegisterUser = jest.spyOn(userFunctions, "registerUser");
       mockedRegisterUser.mockResolvedValueOnce({
         success: false,
         message: "Error creating user: Username/Email already exists!",
       });
-
-      //console.log(await mockedRegisterUser());
 
       const reqBody = {
         first_name: "test_fn",
@@ -93,14 +85,11 @@ describe("POST /submit", () => {
         .send(reqBody);
 
       expect(User.create).toHaveBeenCalledWith(reqBody);
-      //expect(response.statusCode).toBe(500);
 
       expect(response.body).toEqual({
         success: false,
         message: "Error creating user: Username/Email already exists!",
       });
-
-      // assert that User.create() was not called
     });
   });
 });
@@ -157,12 +146,8 @@ describe("GET /articles/:articlename", () => {
       const mockArticle = {
         title: "Test Article",
         content: "This is a test article.",
-        //tags currently do not appear in the article
-        // tags: "#test",
         author: { first_name: "first name", last_name: "last name" },
       };
-
-      console.log("Mock article:", mockArticle);
 
       Post.findOne.mockResolvedValueOnce(mockArticle);
 
@@ -170,7 +155,6 @@ describe("GET /articles/:articlename", () => {
         `/search/articles/${articlename}`
       );
 
-      console.log("Response:", response.body);
       expect(response.statusCode).toBe(200);
 
       expect(response.text).toContain(mockArticle.title);

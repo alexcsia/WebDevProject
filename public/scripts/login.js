@@ -1,5 +1,6 @@
 const loginRef = document.getElementById("login-ref");
 const signupRef = document.getElementById("signup-ref");
+
 //requierements for buttons
 const loginBtn = document.getElementById("login");
 const signupBtn = document.getElementById("signup");

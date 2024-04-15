@@ -3,14 +3,10 @@ const router = express.Router();
 const session = require("express-session");
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
-const {
-  deleteUser,
-  editProfile,
-} = require("../../helperFunctions/userFunctions");
+const { deleteUser, editProfile } = require("../../services/userFunctions");
 
 router.get("/profile", async (req, res) => {
   const user = req.session.user;
-  console.log(user);
   res.render("profile", {
     user,
   });
@@ -32,9 +28,10 @@ router.post("/edit", async (req, res) => {
   try {
     let { first_name, last_name, username, email, phone_number, password } =
       req.body;
-
     const user = req.session.user;
     let hashedPassword;
+
+    //if password field has been modified, hash the new password
     if (password.length === 0) {
       password = user.password;
     } else {
@@ -57,15 +54,12 @@ router.post("/edit", async (req, res) => {
 
     req.session.user = newUser;
 
-    console.log(req.session.user);
-
     res.sendStatus(200);
   } catch (error) {
     console.error("Error updating user:", error);
     console.log(
       JSON.stringify({
         message: error.message,
-        stack: error.stack,
       })
     );
     res.status(500).json(error.message);

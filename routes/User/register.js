@@ -1,21 +1,12 @@
 const express = require("express");
 const User = require("../../models/User");
-const { registerUser } = require("../../helperFunctions/userFunctions");
+const { registerUser } = require("../../services/userFunctions");
 const router = express.Router();
 
 router.post("/submit", async (req, res) => {
   const { first_name, last_name, username, email, phone_number, password } =
     req.body;
 
-  console.log(
-    "REQUEST BODY:",
-    first_name,
-    last_name,
-    username,
-    email,
-    phone_number,
-    password
-  );
   const handleRegister = await registerUser(
     first_name,
     last_name,
