@@ -3,7 +3,8 @@ const Post = require("./models/Post");
 const User = require("./models/User");
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/blogwebsite");
+// mongoose.connect("mongodb://localhost:27017/blogwebsite");
+mongoose.connect(process.env.MONGODB_URI);
 
 async function test() {
   const newUser = await User.create({

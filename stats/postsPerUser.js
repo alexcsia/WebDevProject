@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const User = require("../models/User");
 const Post = require("../models/Post");
 
-mongoose.connect("mongodb://localhost:27017/blogwebsite");
+// mongoose.connect("mongodb://localhost:27017/blogwebsite");
+mongoose.connect(process.env.MONGODB_URI);
 
 async function postsPerUser() {
   try {
