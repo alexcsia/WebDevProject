@@ -26,13 +26,11 @@ async function postsPerUser() {
       },
     ];
 
-    // Analyze the aggregation pipeline
     const result = await Post.aggregate(aggregation); //.analyze();
 
-    // Explain the aggregation pipeline
-    const explanation = await Post.aggregate(aggregation).explain(
-      "executionStats"
-    );
+    // const explanation = await Post.aggregate(aggregation).explain(
+    //   "executionStats"
+    // );
 
     console.log("Analysis Result:", result);
     // console.log("Aggregation Explanation:", explanation);

@@ -37,9 +37,9 @@ async function avgPostLengthPerUser() {
     ];
 
     const result = await Post.aggregate(pipeline);
-    const explain = await Post.aggregate(pipeline).explain();
+    // const explain = await Post.aggregate(pipeline).explain();
     console.log(result);
-    console.log(explain);
+    // console.log(explain);
     return result;
   } catch (error) {
     console.error("An error occurred:", error);
