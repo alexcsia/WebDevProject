@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Statistics</title>
+    <link rel="stylesheet" href="/stylesheet.css" />
+  </head>
+  <body>
+    <a href="/signup.html" id="signup-ref">
+      <button class="custom-button sign-up-btn" id="signup">Sign up</button>
+    </a>
+    <a href="/login.html" id="login-ref">
+      <button class="custom-button log-in-btn" id="login">Log in</button>
+    </a>
+    <a href="/login.html" id="crt-post-ref">
+      <button class="custom-button" id="create-post-btn">Create post</button>
+    </a>
+    <a href="/users/profile" id="crt-post-ref">
+      <button class="custom-button" id="profile-btn">Profile</button>
+    </a>
+    <a href="/index.html" id="home-ref">
+      <button class="custom-button">Home</button>
+    </a>
+
+    <div class="fullscreen-background"></div>
+
+    <h1>Blog Statistics</h1>
+
+    <h2>Most Popular Tags</h2>
+    <ul>
+      <% tagPopularity.forEach(tag => { %>
+      <li><%= tag.tag %> - <%= tag.count %></li>
+      <% }); %>
+    </ul>
+
+    <h2>Number of Posts Per User</h2>
+    <ul>
+      <% userPostCount.forEach(user => { %>
+      <li><%= user.username %> - <%= user.totalPosts %></li>
+      <% }); %>
+    </ul>
+    <h2>User Average Word Count</h2>
+    <ul>
+      <% postLength.forEach(user => { %>
+      <li><%= user.username %> - <%= user.avgPostLength %></li>
+      <% }); %>
+    </ul>
+
+    <script src="/scripts/login.js"></script>
+    <script src="/scripts/index.js"></script>
+    <script src="/scripts/createPostBtn.js"></script>
+    <script src="/scripts/statistics.js"></script>
+  </body>
+</html>

@@ -1,9 +1,7 @@
-//requirements for the tags
 const btn_tags = document.getElementById("tag-btn");
 const tagList = document.getElementById("featured-tags");
 const srcBar = document.getElementById("src-bar");
 
-//get tags from database
 const tags = [
   "#tech",
   "#design",

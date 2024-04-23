@@ -28,7 +28,6 @@ router.get("/find", async (req, res) => {
 
 router.get("/articles/:articlename", async (req, res) => {
   const articlename = req.params.articlename;
-  console.log("Requested article:", articlename);
 
   try {
     const { title, content, tags, author } = await getArticle(articlename);

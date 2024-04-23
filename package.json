@@ -16,6 +16,7 @@
     "supertest-session": "^5.0.1"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.9",

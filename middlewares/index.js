@@ -6,6 +6,7 @@ const registerRoutes = require("../routes/User/register.js");
 const searchRoutes = require("../routes/Post/search.js");
 const createRoutes = require("../routes/Post/post.js");
 const userRoutes = require("../routes/User/users.js");
+const trendRoutes = require("../routes/Post/trends.js");
 
 function addMiddlewares(app) {
   //EJS config
@@ -32,6 +33,7 @@ function addMiddlewares(app) {
   app.use("/search", searchRoutes);
   app.use("/post", createRoutes);
   app.use("/users", userRoutes);
+  app.use("/trends", trendRoutes);
 }
 
 module.exports = addMiddlewares;

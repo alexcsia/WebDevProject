@@ -18,7 +18,14 @@ const getArticle = async (articlename) => {
   return article;
 };
 
-const createPost = async (title, content, tags, first_name, last_name) => {
+const createPost = async (
+  title,
+  content,
+  tags,
+  first_name,
+  last_name,
+  username
+) => {
   const newPost = await Post.create({
     title: title,
     content: content,
@@ -26,6 +33,7 @@ const createPost = async (title, content, tags, first_name, last_name) => {
     author: {
       first_name: first_name,
       last_name: last_name,
+      username: username,
     },
   });
 };

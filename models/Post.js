@@ -17,12 +17,7 @@ const postSchema = new mongoose.Schema({
   author: {
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
-  },
-  // TODO: commenting system
-  comments: {
-    user: { type: String },
-    comment: { type: String },
-    date: { type: Date },
+    username: { type: String, required: true },
   },
 });
 

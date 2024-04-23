@@ -1,9 +1,11 @@
 const express = require("express");
-const router = express.Router();
 const session = require("express-session");
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
-const { deleteUser, editProfile } = require("../../services/userFunctions");
+//const { deleteUser, editProfile } = require("../../services/userFunctions");
+const userFunctions = require("../../services/userFunctions");
+
+const router = express.Router();
 
 router.get("/profile", async (req, res) => {
   const user = req.session.user;
@@ -31,6 +33,8 @@ router.post("/edit", async (req, res) => {
     const user = req.session.user;
     let hashedPassword;
 
+    console.log("the user in session", user);
+
     //if password field has been modified, hash the new password
     if (password.length === 0) {
       password = user.password;
@@ -38,7 +42,7 @@ router.post("/edit", async (req, res) => {
       hashedPassword = await bcrypt.hash(password, 10);
     }
 
-    let newUser = await editProfile(
+    let newUser = await userFunctions.editProfile(
       first_name,
       last_name,
       username,

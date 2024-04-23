@@ -4,11 +4,13 @@ const bcrypt = require("bcrypt");
 const handleLogin = async (user, password) => {
   try {
     const foundUser = await User.findOne({ username: user });
+
     if (!foundUser) {
       return { success: false, message: "Invalid login credentials" };
     }
 
     const correctPassword = await bcrypt.compare(password, foundUser.password);
+
     if (!correctPassword) {
       return { success: false, message: "Invalid login credentials" };
     }
