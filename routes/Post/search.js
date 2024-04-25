@@ -6,6 +6,7 @@ const {
   findArticle,
   getArticle,
 } = require("../../services/postFunctions");
+const getCommentsPerPost = require("../../stats/commentsPerPost");
 
 router.get("/find", async (req, res) => {
   const searchedString = req.query.searchTerm;
@@ -30,11 +31,20 @@ router.get("/articles/:articlename", async (req, res) => {
   const articlename = req.params.articlename;
 
   try {
-    const { title, content, tags, author } = await getArticle(articlename);
+    const { title, content, tags, author, _id } = await getArticle(articlename);
 
-    res.render("article", { title, author, tags, content });
+    const commentsArr = await getCommentsPerPost(_id);
+
+    res.render("article", {
+      commentsArr,
+      title,
+      author,
+      tags,
+      content,
+    });
   } catch (error) {
     res.status(404).json({ error: "Article not found" });
+    console.log(error);
   }
 });
 

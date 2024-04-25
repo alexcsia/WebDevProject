@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const session = require("express-session");
-const { createPost } = require("../../services/postFunctions");
+const { createPost, getArticle } = require("../../services/postFunctions");
+const createComment = require("../../services/commentFunctions");
 
 router.post("/new", async (req, res) => {
   try {
@@ -18,6 +19,16 @@ router.post("/new", async (req, res) => {
       .status(500)
       .json({ message: "An article with the same title already exists!" });
   }
+});
+
+router.post("/comment/:articleName", async (req, res) => {
+  const { content } = req.body;
+  const user = req.session.user;
+  const articleName = req.params.articleName;
+
+  const article = await getArticle(articleName);
+
+  const comment = await createComment(article._id, user.username, content);
 });
 
 module.exports = router;

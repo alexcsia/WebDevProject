@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const Post = require("../models/Post");
-
-// mongoose.connect("mongodb://localhost:27017/blogwebsite");
-mongoose.connect(process.env.MONGODB_URI);
+require("dotenv").config();
 
 const postCountByTag = async () => {
   try {
@@ -13,12 +11,12 @@ const postCountByTag = async () => {
       },
       {
         $group: {
-          _id: "$tags", //group by tags field and count each tag occurance
+          _id: "$tags",
           count: { $sum: 1 },
         },
       },
       {
-        $sort: { count: -1 }, //sort by count in descending order
+        $sort: { count: -1 },
       },
       {
         $project: {
@@ -28,12 +26,12 @@ const postCountByTag = async () => {
         },
       },
     ]);
-    console.log(postCount);
+
     return postCount;
   } catch (error) {
     console.error(error);
     throw error;
   }
 };
-postCountByTag();
+
 module.exports = postCountByTag;

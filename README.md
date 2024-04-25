@@ -2,9 +2,10 @@
 
 ## Description
 
-This is a blog website with minimal functionality created for learning purposes.
+This is a blog website built with Express and MongoDB.
+It allows users to create and browse articles based on given keywords.
 
-## Features
+## Implemented Features / Use cases
 
 **This project is a work in progress**
 
@@ -14,9 +15,13 @@ Post Creation: Authenticated users can create new posts(articles). A form is pro
 
 Post Search Functionality: Users, authenticated or not, can search for posts by providing search terms that may be included in post titles or tags
 
-Post Display: Upon searching, the blog displays a list of published posts. Each post is displayed with its title. When clicking on a post, it will display the title, content and author.
+Post Display: Upon searching, the blog displays a list of published posts. Each post is displayed with its title. When clicking on a post, it will display the title, content, author and associated comments along with the usernames of the commenters.
 
-User Profile: Authenticated users have access to their profile page. On the profile page, users have the option to delete their profile or edit their information.
+Commenting system: Users can create comments on posts; the respective post's page will display a list of comments on the bottom.
+
+User Profile: Authenticated users have access to their profile page. On the profile page, users have the option to delete their profile or edit their information. Here, users can see the number of posts and comments they have created on the blog.
+
+Trending: Users can look at the most used tags on the website as well as lists showcasing the most active writers and the writers with the biggest word count average, all in descending order.
 
 ## Setup Instructions
 
@@ -42,6 +47,7 @@ User Profile: Authenticated users have access to their profile page. On the prof
 - **express:** Web framework for building the application.
 - **express-session:** For managing user sessions.
 - **mongoose:** MongoDB object modeling tool.
+- **@faker-js/faker** Generating fake data for testing purposes.
 
 ### Development Dependencies:
 
@@ -53,8 +59,10 @@ User Profile: Authenticated users have access to their profile page. On the prof
 1. **Create a `.env` file in the root directory of the project.**
 2. **Add the following environment variables to the `.env` file:**
    - PORT=3000
-   - MONGODB_URI=mongodb://localhost:27017/blogwebsite
+   - MONGODB_URI=mongodb+srv://admin:dzNvqFfukGgXJioa@cluster0.tbsbnu0.mongodb.net/blogwebsite?retryWrites=true&w=majority&appName=Cluster0
    - SESSION_SECRET=session_secret
+
+### In order to connect to the database, please use the link above.
 
 ### Starting the Server
 

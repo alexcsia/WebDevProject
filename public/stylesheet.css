@@ -357,7 +357,7 @@ input {
 }
 
 main {
-  padding-bottom: 50px; /* Adjust to accommodate the footer */
+  padding-bottom: 50px;
 }
 .comment-section {
   position: absolute;
@@ -381,6 +381,90 @@ main {
   left: 11%;
 }
 
+#comment-space {
+  height: 60px;
+  width: 500px;
+}
+
+.comments-div {
+  width: 600px;
+  height: 85px;
+  padding: 1px;
+  padding-top: 1px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+  position: relative;
+  top: 35%;
+  left: 15%;
+  background-color: #eef5f0;
+}
+
+#write-comment {
+  position: relative;
+  left: 27%;
+}
+
+.submit-comment-btn {
+  width: 70px;
+  height: 40px;
+}
+
+.lists-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.list-wrapper {
+  flex: 0 0 45%; /* Adjust the width as needed */
+}
+
+.centered-list {
+  text-align: center;
+}
+.lists-container ul,
+.centered-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.lists-container h2,
+.centered-list h2 {
+  font-family: Arial, sans-serif;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  margin-left: 100px;
+}
+
+.lists-container li,
+.centered-list li {
+  font-family: "Times New Roman", Times, serif;
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-left: 100px;
+}
+
+.trending-fnt {
+  font-family: Arial, sans-serif;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  left: 400px;
+  margin-left: 550px;
+  margin-bottom: 30px;
+}
+
+.user-stats {
+  position: absolute;
+  left: 170px;
+  top: 300px;
+  font-size: 16px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 /*  Responsive design */
 
 /* For screens smaller than 768px */

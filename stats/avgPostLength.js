@@ -1,15 +1,11 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const Post = require("../models/Post");
-
-// mongoose.connect("mongodb://localhost:27017/blogwebsite");
-mongoose.connect(process.env.MONGODB_URI);
+require("dotenv").config();
 
 async function avgPostLengthPerUser() {
   try {
     const pipeline = [
-      { $limit: 100 },
-
       {
         $group: {
           _id: "$author.username",
@@ -34,6 +30,9 @@ async function avgPostLengthPerUser() {
           avgPostLength: 1,
         },
       },
+      {
+        $limit: 25,
+      },
     ];
 
     const result = await Post.aggregate(pipeline);
@@ -45,7 +44,5 @@ async function avgPostLengthPerUser() {
     console.error("An error occurred:", error);
   }
 }
-
-avgPostLengthPerUser();
 
 module.exports = avgPostLengthPerUser;

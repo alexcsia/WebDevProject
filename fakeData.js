@@ -2,19 +2,10 @@ const { faker, fakerEN } = require("@faker-js/faker");
 const mongoose = require("mongoose");
 const User = require("./models/User");
 const Post = require("./models/Post");
+const Comment = require("./models/Comment");
+require("dotenv").config();
 
-//mongoose.connect("mongodb://localhost:27017/blogwebsite");
 mongoose.connect(process.env.MONGODB_URI);
-// async function deleteAllPosts() {
-//   try {
-//     const result = await Post.deleteMany({});
-//     console.log(`${result.deletedCount} posts deleted.`);
-//   } catch (error) {
-//     console.error("Error deleting posts:", error);
-//   }
-// }
-
-// deleteAllPosts();
 
 const tag = [
   "#tech",
@@ -99,19 +90,40 @@ async function generateFakePosts(numPosts, user) {
   }
 }
 
+async function generateFakeComments(post) {
+  fakeComments = [];
+  let newComment;
+  const nrUsers = await User.find({}).limit(
+    faker.number.int({ min: 1, max: 7 })
+  );
+  for (const user of nrUsers) {
+    newComment = await Comment.create({
+      author: {
+        username: user.username,
+      },
+      content: faker.lorem.paragraph(),
+      postID: post._id,
+    });
+    fakeComments.push(newComment);
+  }
+
+  console.log(fakeComments);
+}
+
 (async () => {
-  const fakeUsers = await generateFakeUsers(1000);
+  const fakeUsers = await generateFakeUsers(20);
 
   try {
     for (const fakeUser of fakeUsers) {
       const newUser = await User.create(fakeUser);
       const fakePosts = await generateFakePosts(
-        faker.number.int({ min: 13, max: 75 }),
+        faker.number.int({ min: 3, max: 10 }),
         newUser
       );
 
       for (const fakePost of fakePosts) {
         const newPost = await Post.create(fakePost);
+        await generateFakeComments(newPost);
       }
     }
   } catch (error) {

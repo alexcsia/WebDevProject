@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../models/User");
 const Post = require("../models/Post");
-
-// mongoose.connect("mongodb://localhost:27017/blogwebsite");
-mongoose.connect(process.env.MONGODB_URI);
+require("dotenv").config();
 
 async function postsPerUser() {
   try {
@@ -14,6 +12,7 @@ async function postsPerUser() {
           totalPosts: { $sum: 1 },
         },
       },
+
       {
         $sort: { totalPosts: -1 },
       },
@@ -24,22 +23,42 @@ async function postsPerUser() {
           totalPosts: 1,
         },
       },
+      {
+        $limit: 25,
+      },
     ];
 
-    const result = await Post.aggregate(aggregation); //.analyze();
+    const result = await Post.aggregate(aggregation);
+    console.log(result);
 
-    // const explanation = await Post.aggregate(aggregation).explain(
-    //   "executionStats"
-    // );
-
-    console.log("Analysis Result:", result);
-    // console.log("Aggregation Explanation:", explanation);
     return result;
   } catch (error) {
     console.error("An error occurred:", error);
   }
 }
 
-postsPerUser();
+async function getPostsNumber(user) {
+  try {
+    const aggregation = [
+      {
+        $group: {
+          _id: user.username,
+          totalPosts: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          totalPosts: 1,
+        },
+      },
+    ];
 
-module.exports = postsPerUser;
+    const result = await Post.aggregate(aggregation);
+
+    return result;
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
+
+module.exports = { postsPerUser, getPostsNumber };

@@ -25,27 +25,35 @@
 
     <div class="fullscreen-background"></div>
 
-    <h1>Blog Statistics</h1>
+    <h1 class="trending-fnt">Blog ranking</h1>
 
-    <h2>Most Popular Tags</h2>
-    <ul>
-      <% tagPopularity.forEach(tag => { %>
-      <li><%= tag.tag %> - <%= tag.count %></li>
-      <% }); %>
-    </ul>
+    <div class="lists-container">
+      <div class="list-wrapper">
+        <h2>Most Popular Tags</h2>
+        <ul>
+          <% tagPopularity.forEach(tag => { %>
+          <li><%= tag.tag %> - <%= tag.count %></li>
+          <% }); %>
+        </ul>
+      </div>
 
-    <h2>Number of Posts Per User</h2>
-    <ul>
-      <% userPostCount.forEach(user => { %>
-      <li><%= user.username %> - <%= user.totalPosts %></li>
-      <% }); %>
-    </ul>
-    <h2>User Average Word Count</h2>
-    <ul>
-      <% postLength.forEach(user => { %>
-      <li><%= user.username %> - <%= user.avgPostLength %></li>
-      <% }); %>
-    </ul>
+      <div class="list-wrapper">
+        <h2>Top 25 authors with most posts</h2>
+        <ul>
+          <% userPostCount.forEach(user => { %>
+          <li><%= user.username %> - <%= user.totalPosts %></li>
+          <% }); %>
+        </ul>
+      </div>
+    </div>
+    <div class="centered-list">
+      <h2>Top 25 authors with biggest average word count</h2>
+      <ul>
+        <% postLength.forEach(user => { %>
+        <li><%= user.username %> - <%= user.avgPostLength %></li>
+        <% }); %>
+      </ul>
+    </div>
 
     <script src="/scripts/login.js"></script>
     <script src="/scripts/index.js"></script>

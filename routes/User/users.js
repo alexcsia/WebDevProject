@@ -2,15 +2,24 @@ const express = require("express");
 const session = require("express-session");
 const User = require("../../models/User");
 const bcrypt = require("bcrypt");
-//const { deleteUser, editProfile } = require("../../services/userFunctions");
+const { getPostsNumber } = require("../../stats/postsPerUser");
+const getCommentsPerUser = require("../../stats/commentsPerUser");
 const userFunctions = require("../../services/userFunctions");
 
 const router = express.Router();
 
 router.get("/profile", async (req, res) => {
   const user = req.session.user;
+  const posts = await getPostsNumber(user);
+  const comments = await getCommentsPerUser(user);
+
+  let postsMade = posts[0].totalPosts;
+  let commentsMade = comments[0].totalComments;
+
   res.render("profile", {
     user,
+    postsMade,
+    commentsMade,
   });
 });
 

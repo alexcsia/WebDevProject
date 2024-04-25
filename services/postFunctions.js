@@ -15,6 +15,7 @@ const getArticle = async (articlename) => {
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
   const article = await Post.findOne({ title: articlename });
+
   return article;
 };
 
