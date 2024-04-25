@@ -94,7 +94,7 @@ async function generateFakeComments(post) {
   fakeComments = [];
   let newComment;
   const nrUsers = await User.find({}).limit(
-    faker.number.int({ min: 1, max: 7 })
+    faker.number.int({ min: 1, max: 15 })
   );
   for (const user of nrUsers) {
     newComment = await Comment.create({
@@ -111,13 +111,13 @@ async function generateFakeComments(post) {
 }
 
 (async () => {
-  const fakeUsers = await generateFakeUsers(20);
+  const fakeUsers = await generateFakeUsers(30);
 
   try {
     for (const fakeUser of fakeUsers) {
       const newUser = await User.create(fakeUser);
       const fakePosts = await generateFakePosts(
-        faker.number.int({ min: 3, max: 10 }),
+        faker.number.int({ min: 3, max: 15 }),
         newUser
       );
 

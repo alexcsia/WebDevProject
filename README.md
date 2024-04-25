@@ -54,6 +54,14 @@ Trending: Users can look at the most used tags on the website as well as lists s
 - **jest:** Testing framework
 - **supertest:** Assertion library
 
+### Generated Data
+
+All the data is generated through a script using faker.js. (Run **node fakeData.js** in order to generate more)
+The database currently holds 64.31MB of data, respectively:
+The comments collection holds 4620 documents (1.11MB)
+The users collection holds 3487 documents (63.02MB)
+The posts collection holds 813 documents (193.56KB)
+
 ### Configuration
 
 1. **Create a `.env` file in the root directory of the project.**
@@ -62,7 +70,7 @@ Trending: Users can look at the most used tags on the website as well as lists s
    - MONGODB_URI=mongodb+srv://admin:dzNvqFfukGgXJioa@cluster0.tbsbnu0.mongodb.net/blogwebsite?retryWrites=true&w=majority&appName=Cluster0
    - SESSION_SECRET=session_secret
 
-### In order to connect to the database, please use the link above.
+### In order to connect to the database, please use the connection string above.
 
 ### Starting the Server
 
