@@ -13,8 +13,8 @@ router.get("/profile", async (req, res) => {
   const posts = await getPostsNumber(user);
   const comments = await getCommentsPerUser(user);
 
-  let postsMade = posts[0].totalPosts;
-  let commentsMade = comments[0].totalComments;
+  let postsMade = posts[0]?.totalPosts ?? 0;
+  let commentsMade = comments[0]?.totalComments ?? 0;
 
   res.render("profile", {
     user,

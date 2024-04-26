@@ -41,6 +41,9 @@ async function getPostsNumber(user) {
   try {
     const aggregation = [
       {
+        $match: { "author.username": user.username },
+      },
+      {
         $group: {
           _id: user.username,
           totalPosts: { $sum: 1 },
@@ -48,6 +51,7 @@ async function getPostsNumber(user) {
       },
       {
         $project: {
+          _id: 0,
           totalPosts: 1,
         },
       },
