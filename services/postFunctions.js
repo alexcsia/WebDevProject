@@ -8,6 +8,7 @@ const findArticle = async (searchTerms) => {
       { tags: { $regex: new RegExp(searchTerms.join("|"), "i") } },
     ],
   });
+  articles.reverse();
   return articles;
 };
 

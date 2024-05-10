@@ -24,7 +24,9 @@ afterAll(async () => {
 });
 
 afterEach(async () => {
+  await User.deleteMany({ email: "test@email" });
   await User.deleteMany({ username: "test_username" });
+  await Post.deleteMany({ title: "test-article" });
 });
 
 describe("POST /submit", () => {
@@ -47,6 +49,7 @@ describe("POST /submit", () => {
 
       // assert the response status code is a redirect
       expect(response.statusCode).toBe(302);
+      await User.deleteOne({ username: "test_username" });
     });
   });
 });
@@ -167,6 +170,7 @@ describe("POST /users/edit", () => {
       agent.cookies = [];
     });
   });
+
   describe("when the user attempts to edit their profile with already existing info", () => {
     let agent;
     agent = reqs(app);
@@ -218,6 +222,8 @@ describe("POST /users/edit", () => {
 describe("GET /articles/:articlename", () => {
   describe("when user clicks on an article", () => {
     test("should retrieve the rendered article", async () => {
+      let agent;
+      agent = reqs(app);
       const newPost = await Post.create({
         title: "test-article",
         content: "content",
@@ -246,3 +252,145 @@ describe("GET /articles/:articlename", () => {
     });
   });
 });
+
+describe("POST /post/new", () => {
+  describe("when creating a new post", () => {
+    let agent;
+    agent = reqs(app);
+    test("should add it to database and redirect", async () => {
+      const user = await User.create({
+        first_name: "firstname",
+        last_name: "lastname",
+        email: "test@email",
+        phone_number: "123456789",
+        username: "a_username",
+        password: "password",
+      });
+
+      await agent
+        .post("/auth/login")
+        .send({ username: "a_username", password: "password" });
+
+      const postToCreate = {
+        title: "newTitle",
+        content: "newContent",
+        tags: "#tags",
+      };
+
+      const response = await agent.post("/post/new").send(postToCreate);
+
+      post = await Post.findOne({ title: "newTitle" });
+
+      expect(post.title).toBe("newTitle");
+      expect(post.content).toBe("newContent");
+
+      await Post.deleteOne({ title: "newTitle" });
+      await User.deleteOne({ username: "a_username" });
+      agent.cookies = [];
+    });
+  });
+});
+
+describe("/comment/:articleName", () => {
+  describe("when given a user and an article", () => {
+    let agent;
+    agent = reqs(app);
+    test("should create a new comment", async () => {
+      const user = await User.create({
+        first_name: "firstname",
+        last_name: "lastname",
+        email: "test@email",
+        phone_number: "123456789",
+        username: "a_username",
+        password: "password",
+      });
+
+      const post = await Post.create({
+        title: "test-article",
+        content: "content",
+        tags: "tags",
+        author: {
+          first_name: "first_name",
+          last_name: "last_name",
+          username: "username",
+        },
+      });
+
+      await agent
+        .post("/auth/login")
+        .send({ username: "a_username", password: "password" });
+
+      jest.mock("./services/postFunctions", () => ({
+        getArticle: jest.fn(),
+      }));
+
+      const mockedResponse = post;
+      const getArticle = require("./services/postFunctions").getArticle;
+      getArticle.mockResolvedValueOnce(mockedResponse);
+
+      const commentToMake = { content: "comment content" };
+
+      const response = await agent
+        .post("/comment/:articleName")
+        .send(commentToMake, mockedResponse.title);
+
+      expect(response.statusCode).toBe(200);
+
+      await Post.deleteOne({ title: "test-article" });
+      await User.deleteOne({ username: "a_username" });
+    });
+  });
+});
+
+// let agent;
+//     agent = reqs(app);
+//     test("should create a new comment", async () => {
+//       const user = await User.create({
+//         first_name: "firstname",
+//         last_name: "lastname",
+//         email: "test@email",
+//         phone_number: "123456789",
+//         username: "a_username",
+//         password: "password",
+//       });
+
+//       const post = await Post.create({
+//         title: "test-article",
+//         content: "content",
+//         tags: "tags",
+//         author: {
+//           first_name: "first_name",
+//           last_name: "last_name",
+//           username: "username",
+//         },
+//       });
+
+//       await agent
+//         .post("/auth/login")
+//         .send({ username: "a_username", password: "password" });
+
+//       // jest.mock("./services/postFunctions", () => ({
+//       //   getArticle: jest.fn(),
+//       // }));
+
+//       // const mockedResponse = post;
+//       // const getArticle = require("./services/postFunctions").getArticle;
+//       // getArticle.mockResolvedValueOnce(mockedResponse);
+
+//       const reqBody = {
+//         content: "Test comment content",
+//       };
+//       //const commentToMake = { content: "comment content" };
+
+//       const reqParams = {
+//         articleName: "test_article",
+//       };
+
+//       const response = await agent
+//         .post("/post/new")
+//         .send(commentToMake, mockedResponse.title);
+
+//       expect(response.statusCode).toBe(200);
+
+//       await Post.deleteOne({ title: "test-article" });
+//       await User.deleteOne({ username: "a_username" });

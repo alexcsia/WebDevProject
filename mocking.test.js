@@ -65,13 +65,17 @@ describe("POST /submit", () => {
   });
   describe("when registering with already existing credentials", () => {
     test("should respond with 500 status code and error message", async () => {
-      const userFunctions = require("./services/userFunctions");
+      jest.mock("./services/userFunctions", () => ({
+        registerUser: jest.fn(),
+      }));
 
-      const mockedRegisterUser = jest.spyOn(userFunctions, "registerUser");
-      mockedRegisterUser.mockResolvedValueOnce({
+      // Mock the return value of registerUser
+      const mockedResponse = {
         success: false,
         message: "Error creating user: Username/Email already exists!",
-      });
+      };
+      const registerUser = require("./services/userFunctions").registerUser;
+      registerUser.mockResolvedValueOnce(mockedResponse);
 
       const reqBody = {
         first_name: "test_fn",
@@ -88,6 +92,8 @@ describe("POST /submit", () => {
         .send(reqBody);
 
       expect(User.create).toHaveBeenCalledWith(reqBody);
+      expect(response.statusCode).toBe(500);
+      //expect(mockedRegisterUser).toHaveBeenCalledTimes(1);
 
       expect(response.body).toEqual({
         success: false,
