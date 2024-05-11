@@ -29,7 +29,6 @@ async function postsPerUser() {
     ];
 
     const result = await Post.aggregate(aggregation);
-    console.log(result);
 
     return result;
   } catch (error) {
@@ -58,8 +57,6 @@ async function getPostsNumber(user) {
     ];
 
     const result = await Post.aggregate(aggregation);
-
-    return result;
   } catch (error) {
     console.error("An error occurred:", error);
   }
