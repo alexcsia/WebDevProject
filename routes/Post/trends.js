@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Post = require("../../models/Post");
 const popularTags = require("../../stats/tagsPopularity");
-const postsPerUser = require("../../stats/postsPerUser");
+const { postsPerUser } = require("../../stats/postsPerUser");
 const avgPostLengthPerUser = require("../../stats/avgPostLength");
 
 router.get("/trending/tags", async (req, res) => {

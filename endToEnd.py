@@ -22,7 +22,7 @@ def assert_element_visibility(driver, locator, visible=True):
             EC.visibility_of_element_located(locator)
         )
         assert element.is_displayed() == visible
-        # print(f"Test passed: Element {locator} is {'visible' if visible else 'not visible'}.")
+
     except Exception as e:
         print(f"Test failed: {e}")
 
@@ -36,7 +36,6 @@ def test_homepage_elements(driver):
     assert_element_visibility(driver, (By.ID, "login"))
     assert_element_visibility(driver, (By.ID, "create-post-btn"))
     assert_element_visibility(driver, (By.ID, "trending-btn"))
-    assert_element_visibility(driver, (By.ID, "profile-btn"))
 
 #signup page elements
 def test_signup_elements(driver):
@@ -95,7 +94,6 @@ def create_testUser():
     user = User.insert_one({"username":"e2e", "first_name":"e2efname", 
                             "last_name":"e2elname", "email":"e2e@email", 
                             "phone_number":"123", "password": hashed_password.decode("utf-8") })
-    print(user)
 
 def delete_testPost():
     post = Post.delete_one({"title":"test title"})
@@ -141,59 +139,106 @@ def attempt_search():
 #e2e tests
 
 def homepage_test():
-    driver.get("http://localhost:3000/index.html")
-    test_homepage_elements(driver)
+    try:
+        driver.get("http://localhost:3000/index.html")
+        test_homepage_elements(driver)
+        print("homepage test passed")
+    except Exception as e:
+        print(e)
+
 
 def signup_test():
-    driver.get("http://localhost:3000/signup.html")
-    test_signup_elements(driver)
-    attempt_signup(driver)
-    time.sleep(1)
-    delete_testUser()
+    try:
+        driver.get("http://localhost:3000/signup.html")
+        test_signup_elements(driver)
+        attempt_signup(driver)
+        time.sleep(1)
+        delete_testUser()
+    except Exception as e:
+        print(e)
   
 def login_test():
-    driver.get("http://localhost:3000/login.html")
-    test_login_elements(driver)
-    create_testUser()
-    time.sleep(1)
-    attempt_login(driver)
-    time.sleep(1)
-    delete_testUser()
-    
+    try:
+        driver.get("http://localhost:3000/login.html")
+        test_login_elements(driver)
+        create_testUser()
+        time.sleep(1)
+        attempt_login(driver)
+        time.sleep(1)
+        delete_testUser()
+        print("login test passed")
+    except Exception as e:
+        print(e)
+
 def create_post_test():
-    driver.get("http://localhost:3000/login.html")
-    create_testUser()
-    time.sleep(1)
-    attempt_login(driver)
-    driver.get("http://localhost:3000/createPost.html")
-    attempt_create_post()
-    delete_testUser()
-    delete_testPost()
+    try:
+        driver.get("http://localhost:3000/login.html")
+        create_testUser()
+        time.sleep(1)
+        attempt_login(driver)
+        driver.get("http://localhost:3000/createPost.html")
+        attempt_create_post()
+        delete_testUser()
+        delete_testPost()
+        print("create post test passed")
+    except Exception as e:
+        print(e)
 
 def search_functionality_test():
+    try:
+        driver.get("http://localhost:3000/index.html")
+        create_testPost()
+        time.sleep(1)
+        attempt_search()
+        time.sleep(1)
+        article = driver.find_element(By.CSS_SELECTOR,'a.article[href="/search/articles/test title"]')
+        article.click()
+        time.sleep(1)
+        title = driver.find_element(By.XPATH, "//h2[contains(text(), 'test title')]")
+
+        if title:
+            print("search test passed")
+        else:
+            print("search test failed")
+        delete_testPost()
+    except Exception as e:
+        print(e)
+
+def profile_page_test():
+    driver.get("http://localhost:3000/login.html")
+    create_testUser()
+    time.sleep(1)
+    attempt_login(driver)
+    time.sleep(1)
     driver.get("http://localhost:3000/index.html")
-    create_testPost()
-    time.sleep(5)
-    attempt_search()
-    time.sleep(5)
-    article = driver.find_element(By.CSS_SELECTOR,'a.article[href="/search/articles/test article"]')
-    article.click()
-    time.sleep(5)
-    title = driver.find_element(By.CSS_SELECTOR,'a.article[href="/search/articles/test article"]')
-    if title:
-        print("search test passed")
+    time.sleep(1)
+    btn_profile = driver.find_element(By.ID,"profile-btn")
+    btn_profile.click()
+    btn_edit = driver.find_element(By.ID,"editBtn")
+    btn_edit.click()
+    username = driver.find_element(By.ID, "uname")
+    value = username.get_attribute("value")
+    assert value == "e2e"
+    username.send_keys("updated")
+    save_btn = driver.find_element(By.ID, "submit-info-btn")
+    save_btn.click()
+    user = User.find({"username":"e2eupdated"})
+    if user:
+        print("profile test passed")
     else:
-        print("search test failed")
-    # delete_testPost()
+        print("profile test failed")
+    User.delete_one({"username":"e2eupdated"})
+    delete_testUser()
 
   
 if __name__ == "__main__":
-    # homepage_test()
-    # signup_test()
-    # login_test()
-    # create_post_test()
-    # search_functionality_test()
- create_testPost()
+    homepage_test()
+    signup_test()
+    login_test()
+    create_post_test()
+    search_functionality_test()
+    profile_page_test()
+    
   
 
 
