@@ -42,8 +42,6 @@ router.post("/edit", async (req, res) => {
     const user = req.session.user;
     let hashedPassword;
 
-    console.log("the user in session", user);
-
     //if password field has been modified, hash the new password
     if (password.length === 0) {
       password = user.password;

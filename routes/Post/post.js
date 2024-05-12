@@ -27,8 +27,8 @@ router.post("/comment/:articleName", async (req, res) => {
   const articleName = req.params.articleName;
 
   const article = await getArticle(articleName);
-
   const comment = await createComment(article._id, user.username, content);
+  res.sendStatus(200);
 });
 
 module.exports = router;

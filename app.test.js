@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const request = require("supertest");
 const Post = require("./models/Post");
+const Comment = require("./models/Comment");
 const reqs = require("supertest-session");
 //const { password } = require("pg/lib/defaults");
 
@@ -315,32 +316,45 @@ describe("/comment/:articleName", () => {
           username: "username",
         },
       });
+      console.log(post);
+      console.log(user);
 
       await agent
         .post("/auth/login")
         .send({ username: "a_username", password: "password" });
 
-      jest.mock("./services/postFunctions", () => ({
-        getArticle: jest.fn(),
-      }));
-
-      const mockedResponse = post;
-      const getArticle = require("./services/postFunctions").getArticle;
-      getArticle.mockResolvedValueOnce(mockedResponse);
-
       const commentToMake = { content: "comment content" };
 
+      const articleName = post.title;
       const response = await agent
-        .post("/comment/:articleName")
-        .send(commentToMake, mockedResponse.title);
+        .post(`/post/comment/${articleName}`)
+        .send(commentToMake);
+
+      const commentMade = await Comment.findOne({
+        content: commentToMake.content,
+        author: { username: user.username },
+      });
 
       expect(response.statusCode).toBe(200);
+      expect(commentMade.content).toEqual(commentToMake.content);
 
-      await Post.deleteOne({ title: "test-article" });
-      await User.deleteOne({ username: "a_username" });
+      await Comment.deleteMany({
+        content: commentToMake.content,
+        author: { username: user.username },
+      });
     });
   });
 });
+
+// jest.mock("./services/postFunctions", () => ({
+//   getArticle: jest.fn(),
+// }));
+
+// no need to mock that
+
+//const mockedResponse = post;
+// const getArticle = require("./services/postFunctions").getArticle;
+// getArticle.mockResolvedValueOnce(mockedResponse);
 
 // let agent;
 //     agent = reqs(app);
